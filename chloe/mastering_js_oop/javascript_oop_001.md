@@ -9,7 +9,7 @@ Object 을 최선을 다해 배워야 하는 이유. 최선을 다하여 좋은 
 
 Object 를 통한 Paradigm 으로서, **Object-Oriented Programming (OOP)** 을 소개
 
-#####**@ objects 으로 입문하게 될 내용 소개**
+##### **@objects 으로 입문하게 될 내용 소개**
 
 - Literal objects 를 만들고 관리하는 방법
 - Object constructors 를 정의하는 방법
