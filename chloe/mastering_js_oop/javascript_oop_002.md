@@ -1,6 +1,6 @@
 # O.O.P in Javascript
 
-### Chapter 1. Diving into OOP Principles
+### Chapter 2. Diving into OOP Principles
 
 이전 chapter 에서 JavaScript 의 객체와 객체의 기본적인 사용법에 대해 공부했다면,
 
