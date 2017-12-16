@@ -13,8 +13,7 @@ class Data {
   async getData () {
     await this._getData()
     const {_title: title, _header: header, _items: items} = this
-    if (!title || !header || !items) throw new Error('_getData fail')
-    return {title, header, items}
+    return new Info({title, header, items})
   }
   async _getData () {
     throw new Error('must be overrided')
@@ -42,13 +41,13 @@ class Renderer {
   constructor () {
     Object.assign(this, {_title: null, _header: null, _items: null})
   }
-  async renderJson (json) {
-    const {title: _title, header: _header, items: _items} = json
-    if (!_title || !_header || !_items) throw new Error('invalid json data')
+  async render (info) {
+    if (!info instanceof Info) throw new Error('must be Info to render')
+    const {title: _title, header: _header, items: _items} = info
     Object.assign(this, {_title, _header, _items})
-    this._renderJson()
+    this._render()
   }
-  _renderJson () {
+  _render() {
     throw new Error('must be overrided')
   }
 }
@@ -58,14 +57,15 @@ class TableRenderer extends Renderer {
     super()
     this._parent = parent
   }
-  _renderJson () {
+  _render() {
     const parent = document.querySelector(this._parent)
     if (!parent) throw new Error('invalid parent')
 
     if (!this._items.length) {
       parent.innerHTML = 'no data'
       return
-    } else parent.innerHTML = ''
+    }
+    parent.innerHTML = ''
 
     const [caption, table] = 'caption,table'.split(',').map(v => document.createElement(v))
     caption.innerHTML = this._title
@@ -94,11 +94,31 @@ class TableRenderer extends Renderer {
   }
 }
 
+class Info {
+  constructor(data) {
+    const {title, header, items} = data
+    if (!title) throw new Error('data must include title')
+    if (typeof title !== 'string') throw new Error('title must be string')
+    if (!header) throw new Error('data must include heaer')
+    if (!Array.isArray(header)) throw new Error('header must be array')
+    if (!items) throw new Error('data must include items')
+    if (!Array.isArray(items)) throw new Error('items must be array')
+    items.forEach((v, i) => {
+      if (!Array.isArray(v)) throw new Error(`${i + 1}th item is not array`)
+      if (v.length !== header.length) throw new Error(`header length and ${i + 1}th item length are not same`)
+    })
+    this._private = {title, header, items};
+  }
+  get title() {return this._private.title;}
+  get header() {return this._private.header;}
+  get items() {return this._private.items;}
+}
+
 const data = new JsonData('./static/71_1.json')
-const jsonDataPromise = data.getData()
-jsonDataPromise.then(json => {
+const infoPromise = data.getData()
+infoPromise.then(info => {
   const renderer = new TableRenderer('#data')
-  renderer.renderJson(json)
+  renderer.render(info)
 })
 </script>
 </body>
