@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"> <title>CodeSpitz71-1</title> </head>
+<body>
+  <a href="https://github.com/HomoEfficio/CodeSpitz-S-71/blob/master/Day1-02-Design-Patterns-Intro.md">design pattern reference</a>
+<section id="data"></section>
+<script>
+class Data {
+  constructor () {
+    Object.assign(this, {_title: null, _header: null, _items: null})
+  }
+  async getData () {
+    await this._getData()
+    const {_title: title, _header: header, _items: items} = this
+    if (!title || !header || !items) throw new Error('_getData fail')
+    return {title, header, items}
+  }
+  async _getData () {
+    throw new Error('must be overrided')
+  }
+}
+class JsonData extends Data {
+  constructor (data) {
+    super()
+    this._data = data
+  }
+  async _getData () {
+    let json
+    if (typeof this._data === 'string') {
+      const response = await fetch(this._data)
+      json = await response.json()
+    } else {
+      json = this._data
+    }
+    const {title, header, items} = json
+    Object.assign(this, {_title: title, _header: header, _items: items})
+  }
+}
+
+class Renderer {
+  constructor () {
+    Object.assign(this, {_title: null, _header: null, _items: null})
+  }
+  async renderJson (json) {
+    const {title: _title, header: _header, items: _items} = json
+    if (!_title || !_header || !_items) throw new Error('invalid json data')
+    Object.assign(this, {_title, _header, _items})
+    this._renderJson()
+  }
+  _renderJson () {
+    throw new Error('must be overrided')
+  }
+}
+class TableRenderer extends Renderer {
+  constructor (parent) {
+    if (!parent || typeof parent !== 'string') throw new Error('invalid parent')
+    super()
+    this._parent = parent
+  }
+  _renderJson () {
+    const parent = document.querySelector(this._parent)
+    if (!parent) throw new Error('invalid parent')
+
+    if (!this._items.length) {
+      parent.innerHTML = 'no data'
+      return
+    } else parent.innerHTML = ''
+
+    const [caption, table] = 'caption,table'.split(',').map(v => document.createElement(v))
+    caption.innerHTML = this._title
+    table.appendChild(caption)
+
+    table.appendChild(
+      this._header.reduce((thead, data) => {
+        thead.appendChild(document.createElement('th')).innerHTML = data
+        return thead
+      }, document.createElement('thead'))
+    )
+
+    table.appendChild(
+      this._items.reduce((tbody, row) => {
+        tbody.appendChild(
+          row.reduce((tr, data) => {
+            tr.appendChild(document.createElement('td')).innerHTML = data
+            return tr
+          }, document.createElement('tr'))
+        )
+        return tbody
+      }, document.createElement('tbody'))
+    )
+
+    parent.appendChild(table)
+  }
+}
+
+const data = new JsonData('./static/71_1.json')
+const jsonDataPromise = data.getData()
+jsonDataPromise.then(json => {
+  const renderer = new TableRenderer('#data')
+  renderer.renderJson(json)
+})
+</script>
+</body>
+</html>
