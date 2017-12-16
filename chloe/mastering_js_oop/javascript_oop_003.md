@@ -281,7 +281,7 @@ function sum(x = 0, y = 0, z = 0) {
 
 ### Parametric Polymorphism (매개 변수 다형성)
 
-**C# 으로 ** -> 정시 시에는 타입을 정의하지 않고, 객체 생성에서 타입을 지정하기
+**C# 으로** -> 정시 시에는 타입을 정의하지 않고, 객체 생성에서 타입을 지정하기
 
 ```c#
 public class Stack<T> { 
