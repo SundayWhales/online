@@ -123,7 +123,7 @@ interface RocketFactory<T extends Rocket> {
 
 ~~~java
 class Client {
-  buildRocket<T extends Rocket>(factory: RocketFactory): T {
+  buildRocket<T extends Rocket>(factory: RocketFactory<T>): T {
     const rocket = factory.createRocket();
     rocket.payload = factory.createPayload();
     rocket.stages = factory.createStages();
