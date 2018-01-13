@@ -15,7 +15,7 @@
 
 
 
-### JavaScript 를 구조화되고 잘 설계해야하는 이유
+## JavaScript 를 구조화되고 잘 설계해야하는 이유
 
 한마디로 <u>dynamic language</u> 라서
 
@@ -32,7 +32,7 @@ OOP 책에서 본것과 동일하기 때문에 비슷한 내용은 최대한 생
 
 
 
-### 그렇다면 OOP 보다 FP 를 선택해야하는 이유는 뭘까?
+## 그렇다면 OOP 보다 FP 를 선택해야하는 이유는 뭘까?
 
 - OOP 는 다루거나 유지하기가 어려울 정도로 복잡한 JavaScript 를 제어할 수 있도록 도와준다
 - Reactive Programming 는 데이터 흐름 및 변경 전파에 대한 작업을 용이하게 해준다
@@ -60,7 +60,7 @@ FP 는 새로운 툴이나 API 가 아니라,
 
 
 
-### 1.1. FP 가 도울 수 있는 점
+## 1.1. FP 가 도울 수 있는 점
 
 함수형 JavaScript 코드를 작성하는 것은 위의 많은 우려들을 해결한다 (끝)
 
@@ -76,7 +76,7 @@ FP 는 일단 그 본질을 파악해야 한다.
 
 
 
-### 1.2. 뭐지 FP?
+## 1.2. 뭐지 FP?
 
 FP 는 **함수 사용에 큰 중요성을 두는** 소프트웨어 개발 스타일 이다.
 
@@ -101,13 +101,13 @@ FP 는 ***우리가 직면하는 일들을 어떻게 접근할지***  좀 많이
 
 
 
-#### Question.
+### Question.
 
 ol"Hello World"  보다 저 나은 텍스트는 뭘깡
 
 
 
-#### Thinking 1.
+### Thinking 1.
 
 ```javascript
 document.querySelector('#msg').innerHTML = '<h1>Hello World</h1>';
@@ -117,7 +117,7 @@ document.querySelector('#msg').innerHTML = '<h1>Hello World</h1>';
 
 
 
-#### Thinking 2.
+### Thinking 2.
 
 예상대로라면, 우리는 그 코드를 함수화해서 어떤 지점의 변수를 변경할 수 있도록 결정할 것이다.
 
@@ -138,7 +138,7 @@ printMessage('msg', 'h1','Hello World');
 
 
 
-#### Thinking 3.
+### Thinking 3.
 
 *FP 로서 - 전혀 다른 레벨로, **함수자체를 변수화** 하도록 만드는 간단한 <u>생각 프로세스</u>를 가져야 한다.*
 
